@@ -15,8 +15,11 @@ struct ContentView: View {
     var body: some View {
         VStack {
             
-            FilteredList(filter: lastNameFilter) // using it here
-
+            // note closure has the tuple as need to show the specific type of NSManagedObject as we are using generics
+            FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer)  in
+                Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
+            }
+            
             Button("Add Examples") {
               let taylor = Singer(context: moc)
               taylor.firstName = "Taylor"
