@@ -11,12 +11,13 @@ struct ContentView: View {
     
     @Environment(\.managedObjectContext) var moc
     @State private var lastNameFilter = "A"
+    let filterPredicate = "not %K BEGINSWITH %@"
    
     var body: some View {
         VStack {
             
             // note closure has the tuple as need to show the specific type of NSManagedObject as we are using generics
-            FilteredList(filterKey: "lastName", filterValue: lastNameFilter) { (singer: Singer)  in
+            FilteredList(filterKey: "lastName", filterValue: lastNameFilter, filterPredicate: filterPredicate) { (singer: Singer)  in
                 Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
             }
             
