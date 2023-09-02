@@ -11,13 +11,19 @@ struct ContentView: View {
     
     @Environment(\.managedObjectContext) var moc
     @State private var lastNameFilter = "A"
-    let filterPredicate = "not %K BEGINSWITH %@"
+    
+    enum predicateFilter: String {
+        case notBeginsWith = "not %K BEGINSWITH %@"
+        case beginsWith = "%K BEGINSWITH %@"
+        case contains = "%K CONTAINS %@"
+        case containsC = "% K CONTAINS[c] %@"
+    }
    
     var body: some View {
         VStack {
             
             // note closure has the tuple as need to show the specific type of NSManagedObject as we are using generics
-            FilteredList(filterKey: "lastName", filterValue: lastNameFilter, filterPredicate: filterPredicate) { (singer: Singer)  in
+            FilteredList(filterKey: "lastName", filterValue: lastNameFilter, filterPredicate: predicateFilter.notBeginsWith.rawValue) { (singer: Singer)  in
                 Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
             }
             
