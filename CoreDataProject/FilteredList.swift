@@ -20,10 +20,10 @@ struct FilteredList<T: NSManagedObject, Content: View>: View {
         }
     }
     // @escaping means closure is not run straight away, but stashed for later. @ViewBuilder prop wrapper
-    init(filterKey: String, filterValue: String, filterPredicate: String, @ViewBuilder content: @escaping (T) -> Content) {
+    init(filterKey: String, filterValue: String, sortDescriptors: [SortDescriptor<T>], filterPredicate: String, @ViewBuilder content: @escaping (T) -> Content) {
         
         // _fetchRequest modifies the Fetch request object not the value next to the propety wrapper
-        _fetchRequest = FetchRequest<T>(sortDescriptors: [], predicate: NSPredicate(format: "\(filterPredicate)", filterKey, filterValue))
+        _fetchRequest = FetchRequest<T>(sortDescriptors: sortDescriptors, predicate: NSPredicate(format: "\(filterPredicate)", filterKey, filterValue))
         self.content = content
     }
 }

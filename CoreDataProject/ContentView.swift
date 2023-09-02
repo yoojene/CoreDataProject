@@ -18,12 +18,19 @@ struct ContentView: View {
         case contains = "%K CONTAINS %@"
         case containsC = "% K CONTAINS[c] %@"
     }
-   
+    
+
+    let singerSortDescriptors: [SortDescriptor<Singer>] = [SortDescriptor(\.lastName)]
+//     let sortDescriptors = [SortDescriptor(\Singer.firstName)] // without explicit typing
+    
     var body: some View {
         VStack {
             
             // note closure has the tuple as need to show the specific type of NSManagedObject as we are using generics
-            FilteredList(filterKey: "lastName", filterValue: lastNameFilter, filterPredicate: predicateFilter.notBeginsWith.rawValue) { (singer: Singer)  in
+            FilteredList(filterKey: "lastName",
+                         filterValue: lastNameFilter,
+                         sortDescriptors: singerSortDescriptors,
+                         filterPredicate: predicateFilter. beginsWith.rawValue) { (singer: Singer)  in
                 Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
             }
             
@@ -31,6 +38,7 @@ struct ContentView: View {
               let taylor = Singer(context: moc)
               taylor.firstName = "Taylor"
               taylor.lastName = "Swift"
+                
 
               let ed = Singer(context: moc)
               ed.firstName = "Ed"
@@ -39,6 +47,10 @@ struct ContentView: View {
               let adele = Singer(context: moc)
               adele.firstName = "Adele"
               adele.lastName = "Adkins"
+                
+              let cat = Singer(context: moc)
+              cat.firstName = "Cat"
+              cat.lastName = "Stevens"
 
               try? moc.save()
             }
