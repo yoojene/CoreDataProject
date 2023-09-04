@@ -30,7 +30,7 @@ struct ContentView: View {
             FilteredList(filterKey: "lastName",
                          filterValue: lastNameFilter,
                          sortDescriptors: singerSortDescriptors,
-                         filterPredicate: predicateFilter. beginsWith.rawValue) { (singer: Singer)  in
+                         filterPredicate: predicateFilter.beginsWith.rawValue) { (singer: Singer)  in
                 Text("\(singer.wrappedFirstName) \(singer.wrappedLastName)")
             }
             
